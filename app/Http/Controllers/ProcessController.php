@@ -2,10 +2,15 @@
 namespace App\Http\Controllers;
 use Google\Cloud\Core\ServiceBuilder;
 
+
 class ProcessController extends Controller{   
 
     function getInstaData($tag = 'nodejs') {
-        $insta_source = file_get_contents('https://www.instagram.com/explore/tags/'.$tag.'/?__a=1&client_id=1964002447263353|B2ZteK6prxuBo-adVnsiviQeOPo'); 
+        // $filelocation = 'https://www.instagram.com/explore/tags/'.$tag.'/?__a=1&client_id=1964002447263353|B2ZteK6prxuBo-adVnsiviQeOPo'; Instagram api not public so text file containing request data was used instead
+
+        $filelocation = base_path('instagramData.txt');
+
+        $insta_source = file_get_contents($filelocation); 
         $insta_array = json_decode($insta_source, true);
         return $insta_array;
     }
@@ -15,7 +20,7 @@ class ProcessController extends Controller{
         $results_array = $this->getInstaData($tag);
         $limit = 20;
         $allData = [];
-        
+
         for ($i=$limit; $i >= 0; $i--) {
           if(array_key_exists($i,$results_array["graphql"]["hashtag"]["edge_hashtag_to_media"]["edges"])){
             $latest_array = $results_array["graphql"]["hashtag"]["edge_hashtag_to_media"]["edges"][$i]["node"];
