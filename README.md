@@ -2,7 +2,7 @@
 
 <p>These samples show how to use the Google Cloud Natural Language API to analyze Instagram post captions from Instagram public API</p>
 
-#Install Dependencies
+# Install Dependencies
 
 <ul>
 <li>Clone the directory into your system</li>
